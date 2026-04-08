@@ -13,6 +13,8 @@ const ArchiveLinkGenerator = ({ selectedTags, bandName, venueName }) => {
       params.append('collection', 'opensource_movies');
 
       if (bandName) {
+        const sanitizedBand = bandName.replace(/[^a-zA-Z0-9-_]/g, '');
+        params.append("identifier", `${date}-${sanitizedBand}`);
         params.append("title", `${bandName} @ ${venueName} on ${date}`);
         params.append("description", `${bandName} @ ${venueName} on ${date}`);
       } else {
