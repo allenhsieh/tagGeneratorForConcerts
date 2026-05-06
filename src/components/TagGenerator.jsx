@@ -14,6 +14,7 @@ const TagGenerator = () => {
   const [generatedComma, setGeneratedComma] = useState('')
   const [bandName, setBandName] = useState('')
   const [storedBandName, setStoredBandName] = useState('')
+  const [venueInput, setVenueInput] = useState('')
   const [venueName, setVenueName] = useState('')
 
   const clickTimeoutRef = useRef(null)
@@ -40,6 +41,28 @@ const TagGenerator = () => {
     }
   }
 
+  const handleVenueInputChange = (event) => {
+    setVenueInput(event.target.value)
+  }
+
+  const handleVenueInputKeyDown = (event) => {
+    if (event.key === 'Enter' && venueInput.trim()) {
+      const venueNameStartCase = startCaseWords(venueInput.trim())
+      const knownVenueTags = Object.values(venues).flat()
+      const updatedTags = [
+        ...selectedTags.filter(
+          (tag) =>
+            !knownVenueTags.includes(tag) &&
+            tag.toLowerCase() !== venueName.toLowerCase()
+        ),
+        venueNameStartCase
+      ].sort()
+      setSelectedTags([...new Set(updatedTags)])
+      setVenueName(venueNameStartCase)
+      setVenueInput('')
+    }
+  }
+
   const handleTagClick = useCallback((tag) => {
     if (defaultSelectedTags.includes(tag)) {
       return
@@ -60,6 +83,7 @@ const TagGenerator = () => {
 
   const handleVenueSelect = useCallback((venueTags) => {
     setVenueName(venueTags[0])
+    setVenueInput('')
     setSelectedTags((prevTags) => {
       const filteredPrevTags = prevTags.filter(
         (tag) => !Object.values(venues).flat().includes(tag)
@@ -163,11 +187,15 @@ const TagGenerator = () => {
           <input
             id="venue-name-input"
             type="text"
-            value={venueName}
-            onChange={(e) => setVenueName(e.target.value)}
-            placeholder="Enter venue name or pick above"
+            value={venueInput}
+            onChange={handleVenueInputChange}
+            onKeyDown={handleVenueInputKeyDown}
+            placeholder="Enter venue name and press Enter"
             className="band-input"
           />
+          {venueName && (
+            <span className="field-hint">Saved as: {venueName}</span>
+          )}
         </div>
       </div>
 
