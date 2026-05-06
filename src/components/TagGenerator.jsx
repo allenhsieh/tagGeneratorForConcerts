@@ -141,25 +141,36 @@ const TagGenerator = () => {
       <h1>Hashtag Generator</h1>
 
       <VenueSelector onVenueSelect={handleVenueSelect} />
-      
-      <br />
-      
-      <input
-        type="text"
-        value={bandName}
-        onChange={handleBandNameChange}
-        onKeyDown={handleBandNameKeyDown}
-        placeholder="Enter band name"
-        className="band-input"
-      />
 
-      <input
-        type="text"
-        value={venueName}
-        onChange={(e) => setVenueName(e.target.value)}
-        placeholder="Enter venue name"
-        className="band-input"
-      />
+      <div className="show-info-fields">
+        <div className="field">
+          <label htmlFor="band-name-input">Band Name</label>
+          <input
+            id="band-name-input"
+            type="text"
+            value={bandName}
+            onChange={handleBandNameChange}
+            onKeyDown={handleBandNameKeyDown}
+            placeholder="Enter band name and press Enter"
+            className="band-input"
+          />
+          {storedBandName && (
+            <span className="field-hint">Saved as: {storedBandName}</span>
+          )}
+        </div>
+
+        <div className="field">
+          <label htmlFor="venue-name-input">Venue Name</label>
+          <input
+            id="venue-name-input"
+            type="text"
+            value={venueName}
+            onChange={(e) => setVenueName(e.target.value)}
+            placeholder="Enter venue name or pick above"
+            className="band-input"
+          />
+        </div>
+      </div>
 
       <TagList
         selectedTags={selectedTags}
