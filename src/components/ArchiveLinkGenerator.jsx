@@ -29,6 +29,9 @@ const ArchiveLinkGenerator = ({ selectedTags, bandName, venueName }) => {
       params.append("date", date);
       params.append("language", "eng");
       params.append("venue", venueName)
+      if (bandName) {
+        params.append("band", bandName)
+      }
 
       setGeneratedLink(`${baseUrl}?${params.toString()}`);
     };

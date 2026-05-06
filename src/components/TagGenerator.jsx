@@ -28,7 +28,9 @@ const TagGenerator = () => {
       const bandNameStartCase = startCaseWords(bandName.trim())
       const updatedTags = [
         ...selectedTags.filter(
-          (tag) => !tag.toLowerCase().includes(bandName.toLowerCase())
+          (tag) =>
+            tag.toLowerCase() !== storedBandName.toLowerCase() &&
+            !tag.toLowerCase().includes(bandName.toLowerCase())
         ),
         bandNameStartCase
       ].sort()
@@ -148,6 +150,14 @@ const TagGenerator = () => {
         onChange={handleBandNameChange}
         onKeyDown={handleBandNameKeyDown}
         placeholder="Enter band name"
+        className="band-input"
+      />
+
+      <input
+        type="text"
+        value={venueName}
+        onChange={(e) => setVenueName(e.target.value)}
+        placeholder="Enter venue name"
         className="band-input"
       />
 

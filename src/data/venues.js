@@ -79,5 +79,17 @@ export const venues = {
     "Portland OR",
     "PDX",
     "Oregon"
+  ],
+  kentonClub: [
+    "The Kenton Club",
+    "Kenton Club",
+    "2025 N Kilpatrick St",
+    "2025 N Kilpatrick St Portland OR 97217",
+    "97217",
+    "Portland",
+    "Portland Oregon",
+    "Portland OR",
+    "PDX",
+    "Oregon"
   ]
 }

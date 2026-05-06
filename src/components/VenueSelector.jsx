@@ -34,6 +34,9 @@ const VenueSelector = ({ onVenueSelect }) => {
       <button onClick={() => onVenueSelect(venues.blackWaterBar)}>
         Black Water Bar
       </button>
+      <button onClick={() => onVenueSelect(venues.kentonClub)}>
+        The Kenton Club
+      </button>
     </div>
   )
 }
