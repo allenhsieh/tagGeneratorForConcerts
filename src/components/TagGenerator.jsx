@@ -59,18 +59,17 @@ const TagGenerator = () => {
   }, [])
 
   const handleVenueSelect = useCallback((venueTags) => {
+    setVenueName(venueTags[0])
     setSelectedTags((prevTags) => {
       const filteredPrevTags = prevTags.filter(
         (tag) => !Object.values(venues).flat().includes(tag)
       )
-      
+
       const updatedTags = [
         ...defaultSelectedTags,
         ...filteredPrevTags,
         ...venueTags
       ]
-      
-      setVenueName(venueTags[0])
 
       return [...new Set(updatedTags)]
     })
