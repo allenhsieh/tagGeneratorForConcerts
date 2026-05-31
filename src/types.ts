@@ -25,4 +25,6 @@ export interface ShowState {
   venue: VenueSelection
   /** Currently-selected tags (DEFAULT_TAGS start selected; plus any GENRE_GROUPS picks). */
   selectedGenres: string[]
+  /** Archive.org creator (your channel/profile); blank means no creator param. Per-user, not per-show. */
+  creator: string
 }

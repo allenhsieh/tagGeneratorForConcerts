@@ -7,6 +7,7 @@ const base: ShowState = {
   bandName: '',
   venue: { kind: 'none' },
   selectedGenres: [],
+  creator: '',
 }
 
 const paramsOf = (url: string) => new URL(url).searchParams
@@ -22,9 +23,14 @@ describe('buildArchiveUrl', () => {
     expect(p.get('date')).toBe('2026-05-30')
   })
 
-  it('pre-fills the creator with the configured channel link', () => {
-    const p = paramsOf(buildArchiveUrl(base, []))
-    expect(p.get('creator')).toBe('https://www.youtube.com/@DJPandaExpress')
+  it('sets the creator param from state, and omits it when blank', () => {
+    expect(paramsOf(buildArchiveUrl(base, [])).get('creator')).toBeNull()
+    const withCreator = { ...base, creator: 'https://www.youtube.com/@DJPandaExpress' }
+    expect(paramsOf(buildArchiveUrl(withCreator, [])).get('creator')).toBe(
+      'https://www.youtube.com/@DJPandaExpress',
+    )
+    // whitespace-only is treated as blank
+    expect(paramsOf(buildArchiveUrl({ ...base, creator: '   ' }, [])).get('creator')).toBeNull()
   })
 
   it('sets identifier (date-band), band, title, and comma-separated subject when a band is present', () => {

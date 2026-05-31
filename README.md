@@ -15,8 +15,9 @@ there's no shared-array filtering to keep in sync. Adding a venue is one entry i
 
 ## Make it yours
 
-- **Credit yourself:** set `CREATOR` at the top of `src/lib/archive.ts` to your channel/profile
-  link — every upload link pre-fills it as the Archive.org *creator*. Set it to `''` to skip.
+- **Credit yourself:** the **Creator** field pre-fills the Archive.org *creator* with your
+  channel/profile link. Edit or clear it right in the app (blank = no creator). Change the
+  shipped default by editing `DEFAULT_CREATOR` at the top of `src/lib/archive.ts`.
 - **Venues:** add an entry to `src/data/venues.ts`. **Genres:** edit the grouped, alphabetical
   lists in `src/data/genres.ts` (`DEFAULT_TAGS` start pre-selected but can be toggled off;
   `GENRE_GROUPS` holds the Punk / Hardcore / Indie / Metal chips).

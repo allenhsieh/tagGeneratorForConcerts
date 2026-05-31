@@ -3,7 +3,7 @@ import type { ShowState, VenueSelection } from './types'
 import { VENUES } from './data/venues'
 import { DEFAULT_TAGS } from './data/genres'
 import { buildTags, toCommas, toHashtags } from './lib/tags'
-import { buildArchiveUrl } from './lib/archive'
+import { buildArchiveUrl, DEFAULT_CREATOR } from './lib/archive'
 import { ShowDetails } from './components/ShowDetails'
 import { GenreGrid } from './components/GenreGrid'
 import { ArchivePanel } from './components/ArchivePanel'
@@ -16,6 +16,7 @@ type Action =
   | { type: 'SELECT_PRESET_VENUE'; id: string }
   | { type: 'SET_CUSTOM_VENUE'; name: string }
   | { type: 'TOGGLE_GENRE'; genre: string }
+  | { type: 'SET_CREATOR'; creator: string }
   | { type: 'RESET' }
 
 const today = (): string => new Date().toISOString().slice(0, 10)
@@ -25,6 +26,7 @@ const initialState = (): ShowState => ({
   bandName: '',
   venue: { kind: 'none' },
   selectedGenres: [...DEFAULT_TAGS],
+  creator: DEFAULT_CREATOR,
 })
 
 function reducer(state: ShowState, action: Action): ShowState {
@@ -52,8 +54,11 @@ function reducer(state: ShowState, action: Action): ShowState {
           : [...state.selectedGenres, action.genre],
       }
     }
+    case 'SET_CREATOR':
+      return { ...state, creator: action.creator }
     case 'RESET':
-      return initialState()
+      // Reset the show, but keep the creator — it's a per-user setting, not show data.
+      return { ...initialState(), creator: state.creator }
     default:
       return state
   }
@@ -79,10 +84,12 @@ export default function App() {
         date={show.date}
         bandName={show.bandName}
         venue={show.venue}
+        creator={show.creator}
         onDateChange={(date) => dispatch({ type: 'SET_DATE', date })}
         onBandChange={(name) => dispatch({ type: 'SET_BAND', name })}
         onSelectPreset={(id) => dispatch({ type: 'SELECT_PRESET_VENUE', id })}
         onCustomVenueChange={(name) => dispatch({ type: 'SET_CUSTOM_VENUE', name })}
+        onCreatorChange={(creator) => dispatch({ type: 'SET_CREATOR', creator })}
       />
 
       <GenreGrid selected={show.selectedGenres} onToggle={(genre) => dispatch({ type: 'TOGGLE_GENRE', genre })} />

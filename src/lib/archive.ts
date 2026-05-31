@@ -6,10 +6,10 @@ const COLLECTION = 'opensource_movies'
 const MEDIATYPE = 'movies'
 
 // ───────────────────────────────────────────────────────────────────────────
-//  MAKE THIS TOOL YOUR OWN: set this to your channel/profile link and every
-//  upload link will pre-fill it as the Archive.org "creator". Leave '' to skip.
+//  MAKE THIS TOOL YOUR OWN: the Creator input is pre-filled with this. Anyone
+//  can edit or clear it in the UI; a blank input omits the creator param.
 // ───────────────────────────────────────────────────────────────────────────
-const CREATOR = 'https://www.youtube.com/@DJPandaExpress'
+export const DEFAULT_CREATOR = 'https://www.youtube.com/@DJPandaExpress'
 
 /**
  * Build an archive.org/upload link with metadata pre-filled via query params
@@ -39,7 +39,8 @@ export function buildArchiveUrl(show: ShowState, tags: string[]): string {
   params.set('date', show.date)
   params.set('language', 'eng')
   if (venue) params.set('venue', venue)
-  if (CREATOR) params.set('creator', CREATOR)
+  const creator = show.creator.trim()
+  if (creator) params.set('creator', creator)
 
   return `${UPLOAD_URL}?${params.toString()}`
 }

@@ -5,10 +5,12 @@ interface ShowDetailsProps {
   date: string
   bandName: string
   venue: VenueSelection
+  creator: string
   onDateChange: (date: string) => void
   onBandChange: (name: string) => void
   onSelectPreset: (id: string) => void
   onCustomVenueChange: (name: string) => void
+  onCreatorChange: (creator: string) => void
 }
 
 /** The show inputs: date, band, and venue. Everything binds live — no Enter needed. */
@@ -44,6 +46,18 @@ export function ShowDetails(props: ShowDetailsProps) {
           venue={props.venue}
           onSelectPreset={props.onSelectPreset}
           onCustomChange={props.onCustomVenueChange}
+        />
+      </div>
+
+      <div className="field field--wide">
+        <label htmlFor="creator">Creator</label>
+        <input
+          id="creator"
+          type="text"
+          className="text-input"
+          value={props.creator}
+          placeholder="Your channel/profile link — leave blank to omit"
+          onChange={(e) => props.onCreatorChange(e.target.value)}
         />
       </div>
     </section>

@@ -16,6 +16,7 @@ const base: ShowState = {
   bandName: '',
   venue: { kind: 'none' },
   selectedGenres: [],
+  creator: '',
 }
 
 describe('buildTags', () => {
