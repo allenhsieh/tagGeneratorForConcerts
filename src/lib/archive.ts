@@ -6,12 +6,10 @@ const COLLECTION = 'opensource_movies'
 const MEDIATYPE = 'movies'
 
 // ───────────────────────────────────────────────────────────────────────────
-//  MAKE THIS TOOL YOUR OWN: set these to your own name / channel and every
-//  upload link will credit you as the Archive.org "creator" and link back to
-//  your channel in the description. Leave CREATOR as '' to skip the credit.
+//  MAKE THIS TOOL YOUR OWN: set this to your channel/profile link and every
+//  upload link will pre-fill it as the Archive.org "creator". Leave '' to skip.
 // ───────────────────────────────────────────────────────────────────────────
-const CREATOR = 'DJ Panda Express'
-const CREATOR_URL = 'https://www.youtube.com/@DJPandaExpress'
+const CREATOR = 'https://www.youtube.com/@DJPandaExpress'
 
 /**
  * Build an archive.org/upload link with metadata pre-filled via query params
@@ -36,8 +34,7 @@ export function buildArchiveUrl(show: ShowState, tags: string[]): string {
     params.set('band', band)
   }
   params.set('title', headline)
-  const credit = CREATOR && CREATOR_URL ? `\n\nRecorded by ${CREATOR} — ${CREATOR_URL}` : ''
-  params.set('description', headline + credit)
+  params.set('description', headline)
   if (tags.length > 0) params.set('subject', tags.join(','))
   params.set('date', show.date)
   params.set('language', 'eng')

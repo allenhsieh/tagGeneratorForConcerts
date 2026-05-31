@@ -22,10 +22,9 @@ describe('buildArchiveUrl', () => {
     expect(p.get('date')).toBe('2026-05-30')
   })
 
-  it('credits the configured creator', () => {
+  it('pre-fills the creator with the configured channel link', () => {
     const p = paramsOf(buildArchiveUrl(base, []))
-    expect(p.get('creator')).toBe('DJ Panda Express')
-    expect(p.get('description')).toContain('https://www.youtube.com/@DJPandaExpress')
+    expect(p.get('creator')).toBe('https://www.youtube.com/@DJPandaExpress')
   })
 
   it('sets identifier (date-band), band, title, and comma-separated subject when a band is present', () => {
@@ -34,9 +33,9 @@ describe('buildArchiveUrl', () => {
     expect(p.get('identifier')).toBe('2026-05-30-Gel')
     expect(p.get('band')).toBe('Gel')
     expect(p.get('title')).toBe('Gel @ High Limit Room on 2026-05-30')
+    expect(p.get('description')).toBe('Gel @ High Limit Room on 2026-05-30')
     // archive.org splits the subject field on commas, not semicolons
     expect(p.get('subject')).toBe('Hardcore,Punk')
-    expect(p.get('description')).toContain('Gel @ High Limit Room on 2026-05-30')
     expect(p.get('venue')).toBe('High Limit Room')
   })
 

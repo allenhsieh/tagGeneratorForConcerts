@@ -15,9 +15,8 @@ there's no shared-array filtering to keep in sync. Adding a venue is one entry i
 
 ## Make it yours
 
-- **Credit yourself:** edit `CREATOR` / `CREATOR_URL` at the top of `src/lib/archive.ts` — every
-  upload link will set the Archive.org *creator* and link your channel in the description. Set
-  `CREATOR` to `''` to skip the credit entirely.
+- **Credit yourself:** set `CREATOR` at the top of `src/lib/archive.ts` to your channel/profile
+  link — every upload link pre-fills it as the Archive.org *creator*. Set it to `''` to skip.
 - **Venues:** add an entry to `src/data/venues.ts`. **Genres:** edit the alphabetical list in
   `src/data/genres.ts`.
 
