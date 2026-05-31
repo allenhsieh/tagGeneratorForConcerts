@@ -23,6 +23,6 @@ export interface ShowState {
   /** One band per video (an Archive item is one set). */
   bandName: string
   venue: VenueSelection
-  /** A subset of GENRES. */
+  /** Currently-selected tags (DEFAULT_TAGS start selected; plus any GENRE_GROUPS picks). */
   selectedGenres: string[]
 }

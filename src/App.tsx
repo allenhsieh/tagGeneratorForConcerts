@@ -1,6 +1,7 @@
 import { useMemo, useReducer } from 'react'
 import type { ShowState, VenueSelection } from './types'
 import { VENUES } from './data/venues'
+import { DEFAULT_TAGS } from './data/genres'
 import { buildTags, toCommas, toHashtags } from './lib/tags'
 import { buildArchiveUrl } from './lib/archive'
 import { ShowDetails } from './components/ShowDetails'
@@ -23,7 +24,7 @@ const initialState = (): ShowState => ({
   date: today(),
   bandName: '',
   venue: { kind: 'none' },
-  selectedGenres: [],
+  selectedGenres: [...DEFAULT_TAGS],
 })
 
 function reducer(state: ShowState, action: Action): ShowState {

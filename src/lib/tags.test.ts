@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest'
 import type { ShowState } from '../types'
-import { DEFAULT_TAGS } from '../data/genres'
 import {
   buildTags,
   dedupeCaseInsensitive,
@@ -20,9 +19,9 @@ const base: ShowState = {
 }
 
 describe('buildTags', () => {
-  it('always includes the default tags', () => {
-    const tags = buildTags(base)
-    for (const tag of DEFAULT_TAGS) expect(tags).toContain(tag)
+  it('returns only what is selected — defaults are no longer forced', () => {
+    expect(buildTags(base)).toEqual([])
+    expect(buildTags({ ...base, selectedGenres: ['Music', 'Punk'] })).toEqual(['Music', 'Punk'])
   })
 
   it('merges genres, venue tags, and band from separate state', () => {

@@ -181,19 +181,23 @@ input[type='date'] {
   font-weight: 700;
 }
 
-.chip--locked {
-  opacity: 0.85;
-  background: rgba(78, 205, 196, 0.16);
-  border-color: rgba(78, 205, 196, 0.3);
+/* Genres */
+.genre-group {
+  margin-bottom: 16px;
 }
 
-/* Genres */
-.always-included {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 14px;
+.genre-group:last-child {
+  margin-bottom: 0;
+}
+
+.genre-group__label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
 }
 
 .genre-grid {

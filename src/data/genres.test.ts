@@ -1,23 +1,24 @@
 import { describe, it, expect } from 'vitest'
-import { DEFAULT_TAGS, GENRES } from './genres'
+import { ALL_TAGS, GENRE_GROUPS } from './genres'
 
-describe('GENRES', () => {
-  it('has no case-insensitive duplicates', () => {
-    const lower = GENRES.map((g) => g.toLowerCase())
-    expect(new Set(lower).size).toBe(GENRES.length)
+describe('genre groups', () => {
+  it('cover the four major scenes, each populated', () => {
+    expect(GENRE_GROUPS.map((g) => g.name)).toEqual(['Punk', 'Hardcore', 'Indie', 'Metal'])
+    for (const g of GENRE_GROUPS) expect(g.tags.length).toBeGreaterThan(0)
   })
 
-  it('does not repeat any of the always-included DEFAULT_TAGS', () => {
-    const defaults = new Set(DEFAULT_TAGS.map((t) => t.toLowerCase()))
-    expect(GENRES.filter((g) => defaults.has(g.toLowerCase()))).toEqual([])
+  it('has no case-insensitive duplicates across defaults and every group', () => {
+    const lower = ALL_TAGS.map((t) => t.toLowerCase())
+    expect(new Set(lower).size).toBe(ALL_TAGS.length)
   })
 
-  it('stays alphabetical so the grid is scannable', () => {
-    const sorted = [...GENRES].sort((a, b) => a.localeCompare(b))
-    expect(GENRES).toEqual(sorted)
+  it('keeps each group alphabetical so the grid is scannable', () => {
+    for (const g of GENRE_GROUPS) {
+      expect(g.tags).toEqual([...g.tags].sort((a, b) => a.localeCompare(b)))
+    }
   })
 
   it('has no leading/trailing whitespace', () => {
-    expect(GENRES.filter((g) => g !== g.trim())).toEqual([])
+    expect(ALL_TAGS.filter((t) => t !== t.trim())).toEqual([])
   })
 })

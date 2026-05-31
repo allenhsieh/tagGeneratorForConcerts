@@ -1,5 +1,4 @@
 import type { ShowState, VenueSelection } from '../types'
-import { DEFAULT_TAGS } from '../data/genres'
 
 /**
  * Capitalize the first letter of each space-separated word, leaving the rest
@@ -44,14 +43,14 @@ export function dedupeCaseInsensitive(tags: string[]): string[] {
 }
 
 /**
- * The single derivation that merges the three concerns (defaults + genres +
- * venue + band) into the final, sorted, de-duplicated tag list. Pure: no state,
- * no filtering of a shared array.
+ * The single derivation that merges the selected tags + venue + band into the
+ * final, sorted, de-duplicated tag list. Pure: no state, no filtering of a
+ * shared array. Defaults aren't forced here — they're pre-selected in state and
+ * arrive via `selectedGenres`, so the user can toggle them off.
  */
 export function buildTags(show: ShowState): string[] {
   const band = titleCaseWords(show.bandName.trim())
   const all = [
-    ...DEFAULT_TAGS,
     ...show.selectedGenres,
     ...venueTags(show.venue),
     ...(band ? [band] : []),

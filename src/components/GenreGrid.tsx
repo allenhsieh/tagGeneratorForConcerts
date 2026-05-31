@@ -1,45 +1,47 @@
-import { DEFAULT_TAGS, GENRES } from '../data/genres'
+import { DEFAULT_TAGS, GENRE_GROUPS } from '../data/genres'
 
 interface GenreGridProps {
   selected: string[]
   onToggle: (genre: string) => void
 }
 
-/** Tap/click-to-toggle genre chips (touch-friendly; no drag-select). */
+/**
+ * Tap/click-to-toggle tag chips, grouped by scene (Core, then Punk / Hardcore /
+ * Indie / Metal). Every chip toggles — including the Core defaults, which start
+ * selected but can be turned off.
+ */
 export function GenreGrid({ selected, onToggle }: GenreGridProps) {
   const selectedSet = new Set(selected)
+  const groups = [{ name: 'Core', tags: DEFAULT_TAGS }, ...GENRE_GROUPS]
+
   return (
     <section className="genre-section">
       <div className="section-head">
-        <h2>Genres</h2>
+        <h2>Tags</h2>
         <span className="muted">{selected.length} selected</span>
       </div>
 
-      <div className="always-included">
-        <span className="muted">Always included:</span>
-        {DEFAULT_TAGS.map((tag) => (
-          <span key={tag} className="chip chip--locked">
-            {tag}
-          </span>
-        ))}
-      </div>
-
-      <div className="genre-grid" role="group" aria-label="Genres">
-        {GENRES.map((genre) => {
-          const active = selectedSet.has(genre)
-          return (
-            <button
-              key={genre}
-              type="button"
-              className={`chip chip--toggle${active ? ' is-active' : ''}`}
-              aria-pressed={active}
-              onClick={() => onToggle(genre)}
-            >
-              {genre}
-            </button>
-          )
-        })}
-      </div>
+      {groups.map((group) => (
+        <div className="genre-group" key={group.name}>
+          <span className="genre-group__label">{group.name}</span>
+          <div className="genre-grid" role="group" aria-label={group.name}>
+            {group.tags.map((tag) => {
+              const active = selectedSet.has(tag)
+              return (
+                <button
+                  key={tag}
+                  type="button"
+                  className={`chip chip--toggle${active ? ' is-active' : ''}`}
+                  aria-pressed={active}
+                  onClick={() => onToggle(tag)}
+                >
+                  {tag}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      ))}
     </section>
   )
 }
