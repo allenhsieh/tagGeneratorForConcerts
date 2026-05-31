@@ -1,8 +1,8 @@
 {
   "name": "tag-generator-for-concerts",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "homepage": "https://allenhsieh.github.io/tagGeneratorForConcerts/",
-  "description": "A modern tag generator for punk, hardcore, and metal music social media posts",
+  "description": "Pre-fill Archive.org upload metadata and tags for punk/hardcore/metal concert videos",
   "keywords": [
     "react",
     "punk",
@@ -13,7 +13,7 @@
     "instagram",
     "archive.org"
   ],
-  "main": "src/index.js",
+  "type": "module",
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -24,12 +24,16 @@
     "@vitejs/plugin-react": "^4.3.1",
     "gh-pages": "^6.1.1",
     "typescript": "^5.5.4",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vitest": "^3.2.4"
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
+    "typecheck": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },

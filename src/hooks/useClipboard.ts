@@ -1,14 +1,15 @@
 import { useState } from 'react'
 
-export const useClipboard = () => {
+/** Copy text to the clipboard with a graceful fallback and a transient "copied" flag. */
+export function useClipboard(resetMs = 2000) {
   const [copied, setCopied] = useState(false)
 
-  const copyToClipboard = async (text) => {
+  async function copy(text: string): Promise<boolean> {
     try {
       if (navigator.clipboard && window.isSecureContext) {
         await navigator.clipboard.writeText(text)
       } else {
-        // Fallback for non-secure contexts
+        // Fallback for non-secure contexts (e.g. plain http).
         const textArea = document.createElement('textarea')
         textArea.value = text
         textArea.style.position = 'absolute'
@@ -18,15 +19,14 @@ export const useClipboard = () => {
         document.execCommand('copy')
         document.body.removeChild(textArea)
       }
-      
       setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      setTimeout(() => setCopied(false), resetMs)
       return true
     } catch (err) {
-      console.error('Failed to copy text: ', err)
+      console.error('Failed to copy text:', err)
       return false
     }
   }
 
-  return { copyToClipboard, copied }
+  return { copy, copied }
 }
