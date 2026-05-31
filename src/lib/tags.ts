@@ -1,10 +1,21 @@
 import type { ShowState, VenueSelection } from '../types'
 import { DEFAULT_TAGS } from '../data/genres'
 
-/** Display name for a venue selection (trimmed for custom input). */
+/**
+ * Capitalize the first letter of each space-separated word, leaving the rest
+ * untouched (so stylized all-caps like "MIL-SPEC" survive). Mirrors v1's
+ * startCaseWords — applied to free-text band/venue input, not curated genres.
+ */
+export const titleCaseWords = (value: string): string =>
+  value
+    .split(' ')
+    .map((word) => (word ? word.charAt(0).toUpperCase() + word.slice(1) : word))
+    .join(' ')
+
+/** Display name for a venue selection (trimmed + title-cased for custom input). */
 export function venueName(selection: VenueSelection): string {
   if (selection.kind === 'preset') return selection.venue.name
-  if (selection.kind === 'custom') return selection.name.trim()
+  if (selection.kind === 'custom') return titleCaseWords(selection.name.trim())
   return ''
 }
 
@@ -12,7 +23,7 @@ export function venueName(selection: VenueSelection): string {
 export function venueTags(selection: VenueSelection): string[] {
   if (selection.kind === 'preset') return selection.venue.tags
   if (selection.kind === 'custom') {
-    const name = selection.name.trim()
+    const name = titleCaseWords(selection.name.trim())
     return name ? [name] : []
   }
   return []
@@ -38,7 +49,7 @@ export function dedupeCaseInsensitive(tags: string[]): string[] {
  * no filtering of a shared array.
  */
 export function buildTags(show: ShowState): string[] {
-  const band = show.bandName.trim()
+  const band = titleCaseWords(show.bandName.trim())
   const all = [
     ...DEFAULT_TAGS,
     ...show.selectedGenres,

@@ -5,6 +5,7 @@ import {
   buildTags,
   dedupeCaseInsensitive,
   sanitizeId,
+  titleCaseWords,
   toCommas,
   toHashtags,
   venueName,
@@ -44,6 +45,10 @@ describe('buildTags', () => {
     expect(buildTags({ ...base, bandName: '   ' })).not.toContain('')
     expect(buildTags({ ...base, bandName: '   ' })).toEqual(buildTags(base))
   })
+
+  it('title-cases a free-text band name (mirrors v1)', () => {
+    expect(buildTags({ ...base, bandName: 'gouge away' })).toContain('Gouge Away')
+  })
 })
 
 describe('formatters', () => {
@@ -61,6 +66,10 @@ describe('helpers', () => {
   })
   it('sanitizeId removes URL-unsafe characters', () => {
     expect(sanitizeId('Gel!! / 2024')).toBe('Gel2024')
+  })
+  it('titleCaseWords capitalizes each word but preserves stylized caps', () => {
+    expect(titleCaseWords('gouge away')).toBe('Gouge Away')
+    expect(titleCaseWords('MIL-SPEC')).toBe('MIL-SPEC')
   })
   it('venueName resolves preset, custom (trimmed), and none', () => {
     expect(venueName({ kind: 'preset', venue: { id: 'x', name: 'Foo', tags: [] } })).toBe('Foo')

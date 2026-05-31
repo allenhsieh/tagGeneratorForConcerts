@@ -1,5 +1,5 @@
 import type { ShowState } from '../types'
-import { sanitizeId, venueName } from './tags'
+import { sanitizeId, titleCaseWords, venueName } from './tags'
 
 const UPLOAD_URL = 'https://archive.org/upload'
 const COLLECTION = 'opensource_movies'
@@ -25,7 +25,7 @@ export function buildArchiveUrl(show: ShowState, tags: string[]): string {
   params.set('mediatype', MEDIATYPE)
 
   const venue = venueName(show.venue)
-  const band = show.bandName.trim()
+  const band = titleCaseWords(show.bandName.trim())
   const where = venue ? ` @ ${venue}` : ''
   const headline = band ? `${band}${where} on ${show.date}` : `Live recording${where} on ${show.date}`
 
