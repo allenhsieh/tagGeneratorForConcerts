@@ -13,11 +13,12 @@ const base: ShowState = {
 const paramsOf = (url: string) => new URL(url).searchParams
 
 describe('buildArchiveUrl', () => {
-  it('targets the uploader with the movie mediatype and base metadata', () => {
+  it('targets the uploader with base metadata', () => {
     const url = buildArchiveUrl(base, [])
     expect(url.startsWith('https://archive.org/upload?')).toBe(true)
     const p = paramsOf(url)
-    expect(p.get('mediatype')).toBe('movies')
+    // mediatype is an admin-only field; presetting it is rejected, so we omit it
+    expect(p.has('mediatype')).toBe(false)
     expect(p.get('collection')).toBe('opensource_movies')
     expect(p.get('language')).toBe('eng')
     expect(p.get('date')).toBe('2026-05-30')

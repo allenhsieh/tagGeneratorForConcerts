@@ -3,7 +3,6 @@ import { sanitizeId, titleCaseWords, venueName } from './tags'
 
 const UPLOAD_URL = 'https://archive.org/upload'
 const COLLECTION = 'opensource_movies'
-const MEDIATYPE = 'movies'
 
 // ───────────────────────────────────────────────────────────────────────────
 //  MAKE THIS TOOL YOUR OWN: the Creator input is pre-filled with this. Anyone
@@ -22,7 +21,6 @@ export const DEFAULT_CREATOR = 'https://www.youtube.com/@DJPandaExpress'
 export function buildArchiveUrl(show: ShowState, tags: string[]): string {
   const params = new URLSearchParams()
   params.set('collection', COLLECTION)
-  params.set('mediatype', MEDIATYPE)
 
   const venue = venueName(show.venue)
   const band = titleCaseWords(show.bandName.trim())
